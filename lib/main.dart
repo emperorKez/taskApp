@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Task App Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrangeAccent),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
       ),
       home: const MyHomePage(),
@@ -41,12 +41,17 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Task App for Shehan'),
         centerTitle: true,
       ),
-      body: ListView.builder(
-          shrinkWrap: true,
-          itemBuilder: (context, index) => ListTile(
-                title: Text(taskList[index].title),
-                subtitle: Text(taskList[index].description),
-              )),
+      body: taskList.isEmpty
+          ? const Center(
+              child: Text('No Task yet, create a task'),
+            )
+          : ListView.builder(
+              shrinkWrap: true,
+              itemCount: taskList.length,
+              itemBuilder: (context, index) => ListTile(
+                    title: Text(taskList[index].title),
+                    subtitle: Text(taskList[index].description),
+                  )),
       floatingActionButton: customFloatingActionButton(),
     );
   }
@@ -70,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
           style: const TextStyle(
             fontSize: 14.0,
           ),
+          decoration: const InputDecoration(labelText: 'Title'),
         ),
         const SizedBox(
           height: 15,
@@ -80,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
           minLines: 2,
           maxLines: 4,
           scrollPadding: const EdgeInsets.all(0),
+          decoration: const InputDecoration(labelText: 'Description'),
           style: const TextStyle(
             fontSize: 14.0,
           ),
